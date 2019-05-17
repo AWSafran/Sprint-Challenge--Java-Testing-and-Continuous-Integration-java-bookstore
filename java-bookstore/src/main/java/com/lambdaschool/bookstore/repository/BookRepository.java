@@ -12,4 +12,8 @@ public interface BookRepository extends CrudRepository<Book, Long>
     @Modifying
     @Query(value = "UPDATE books SET booktitle=:bookTitle, isbn=:isbn, copy=:copy WHERE bookid=:bookid", nativeQuery = true)
     void updateBook(long bookid, String bookTitle, String isbn, int copy);
+    
+    @Modifying
+    @Query(value = "DELETE FROM bookauthors WHERE bookid=:bookid", nativeQuery = true)
+    void deleteBookFromAuthorList(long bookid);
 }

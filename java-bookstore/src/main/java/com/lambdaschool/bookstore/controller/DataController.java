@@ -42,4 +42,11 @@ public class DataController
         authorService.assignBookToAuthor(bookId, id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    
+    @DeleteMapping(value = "/data/books/{id}")
+    public ResponseEntity<?> deleteBook(@PathVariable long id)
+    {
+        bookService.deleteBook(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

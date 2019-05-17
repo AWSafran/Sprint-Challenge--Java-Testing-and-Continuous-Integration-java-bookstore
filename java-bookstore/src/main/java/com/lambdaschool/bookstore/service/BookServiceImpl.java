@@ -55,4 +55,20 @@ public class BookServiceImpl implements BookService
         return book;
         
     }
+    
+    @Transactional
+    @Override
+    public void deleteBook(long id) throws EntityNotFoundException
+    {
+        if(bookRepository.findById(id).isPresent())
+        {
+            if(bookRepository.findByBookid(id).getAuthors().size() != 0)
+            {
+                bookRepository.deleteBookFromAuthorList(id);
+            }
+            
+            bookRepository.deleteById(id);
+            
+        }
+    }
 }
