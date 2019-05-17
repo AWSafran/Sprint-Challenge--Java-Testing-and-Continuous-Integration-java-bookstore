@@ -8,5 +8,5 @@ public interface BookService
 {
     List<Book> getAllBooks();
     
-    Book updateBook(Book book);
+    Book updateBook(long id, Book book);
 }
