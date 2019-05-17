@@ -35,4 +35,11 @@ public class DataController
     {
         return new ResponseEntity<>(bookService.updateBook(id, updatedBook), HttpStatus.OK);
     }
+    
+    @PostMapping(value = "/data/books/authors/{id}")
+    public ResponseEntity<?> assignBookToAuthor(@PathVariable long id, @RequestBody long bookId)
+    {
+        authorService.assignBookToAuthor(bookId, id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

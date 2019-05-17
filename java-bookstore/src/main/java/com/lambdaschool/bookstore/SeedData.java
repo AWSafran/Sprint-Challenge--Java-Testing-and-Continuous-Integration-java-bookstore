@@ -66,11 +66,13 @@ public class SeedData implements CommandLineRunner
         ArrayList<Book> b1List = new ArrayList<>();
         b1List.add(b1);
         
-        Author a1 = new Author("Andrew", "Safran", b1List);
+        Author a1 = new Author("Andrew", "Safran", new ArrayList<>());
         
-        ArrayList<Author> a1List = new ArrayList<>();
-        a1List.add(a1);
-        b1.setAuthors(a1List);
+        //Turn off to test assign book to author
+//        ArrayList<Author> a1List = new ArrayList<>();
+//        a1List.add(a1);
+//        b1.setAuthors(a1List);
+//        a1.setBooks(b1List);
         
         bookRepository.save(b1);
         authorRepository.save(a1);
