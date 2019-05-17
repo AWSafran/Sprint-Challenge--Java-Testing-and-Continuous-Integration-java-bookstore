@@ -1,5 +1,6 @@
 package com.lambdaschool.bookstore.service;
 
+import com.lambdaschool.bookstore.exception.ResourceNotFoundException;
 import com.lambdaschool.bookstore.model.Book;
 import com.lambdaschool.bookstore.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class BookServiceImpl implements BookService
     
     @Transactional
     @Override
-    public Book updateBook(long id, Book book) throws EntityNotFoundException
+    public Book updateBook(long id, Book book) throws ResourceNotFoundException
     {
         if(bookRepository.findById(id).isPresent())
         {
@@ -50,7 +51,7 @@ public class BookServiceImpl implements BookService
             bookRepository.updateBook(id, book.getBooktitle(), book.getIsbn(), book.getCopy());
         }else
         {
-            throw new EntityNotFoundException();
+            throw new ResourceNotFoundException("Could not find book with id: " + id);
         }
         
         return book;
@@ -59,7 +60,7 @@ public class BookServiceImpl implements BookService
     
     @Transactional
     @Override
-    public void deleteBook(long id) throws EntityNotFoundException
+    public void deleteBook(long id) throws ResourceNotFoundException
     {
         if(bookRepository.findById(id).isPresent())
         {
@@ -70,6 +71,9 @@ public class BookServiceImpl implements BookService
             
             bookRepository.deleteById(id);
             
+        } else
+        {
+            throw new ResourceNotFoundException("Could not find book with Id: " + id);
         }
     }
 }

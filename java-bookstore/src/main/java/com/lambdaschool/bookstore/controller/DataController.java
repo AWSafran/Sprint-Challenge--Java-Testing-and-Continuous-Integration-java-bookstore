@@ -1,5 +1,6 @@
 package com.lambdaschool.bookstore.controller;
 
+import com.lambdaschool.bookstore.exception.ResourceNotFoundException;
 import com.lambdaschool.bookstore.model.Book;
 import com.lambdaschool.bookstore.service.AuthorService;
 import com.lambdaschool.bookstore.service.BookService;
@@ -57,7 +58,7 @@ public class DataController
     @ApiOperation(value = "Updates data for a given book, excluding author", notes = "The updated book will be returned", response = Book.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Book updated successfully", response = Book.class),
-            @ApiResponse(code = 404, message = "Book to update not found in system", response = EntityNotFoundException.class)
+            @ApiResponse(code = 404, message = "Book to update not found in system", response = ResourceNotFoundException.class)
     })
     @PutMapping(value = "/data/books/{id}", consumes = {"application/json"}, produces = {"application/json"})
     public ResponseEntity<?> updateBook(@PathVariable long id, @RequestBody Book updatedBook)
@@ -68,7 +69,7 @@ public class DataController
     @ApiOperation(value = "assigns a book to the specified author", response = void.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully assigned book to author", response = void.class),
-            @ApiResponse(code = 404, message = "Selected book or author could not be found", response = EntityNotFoundException.class)
+            @ApiResponse(code = 404, message = "Selected book or author could not be found", response = ResourceNotFoundException.class)
     })
     @PostMapping(value = "/data/books/authors/{id}")
     public ResponseEntity<?> assignBookToAuthor(@PathVariable long id, @RequestBody long bookId)
@@ -80,7 +81,7 @@ public class DataController
     @ApiOperation(value = "Deletes specified book from records", notes = "This will also delete the book from all authors it was assigned to, but will not delete authors", response = void.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully deleted book", response = void.class),
-            @ApiResponse(code = 404, message = "Could not find selected book to delete", response = EntityNotFoundException.class)
+            @ApiResponse(code = 404, message = "Could not find selected book to delete", response = ResourceNotFoundException.class)
     })
     @DeleteMapping(value = "/data/books/{id}")
     public ResponseEntity<?> deleteBook(@PathVariable long id)

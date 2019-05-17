@@ -1,5 +1,6 @@
 package com.lambdaschool.bookstore.service;
 
+import com.lambdaschool.bookstore.exception.ResourceNotFoundException;
 import com.lambdaschool.bookstore.model.Author;
 import com.lambdaschool.bookstore.repository.AuthorRepository;
 import com.lambdaschool.bookstore.repository.BookRepository;
@@ -33,7 +34,7 @@ public class AuthorServiceImpl implements AuthorService
     
     @Transactional
     @Override
-    public void assignBookToAuthor(long bookid, long authorid) throws EntityNotFoundException
+    public void assignBookToAuthor(long bookid, long authorid) throws ResourceNotFoundException
     {
         if(bookRepository.findById(bookid).isPresent() && authorRepository.findById(authorid).isPresent())
         {
@@ -41,7 +42,7 @@ public class AuthorServiceImpl implements AuthorService
             authorRepository.assignAuthorToBook(bookid, authorid);
         }else
         {
-            throw new EntityNotFoundException();
+            throw new ResourceNotFoundException("Could not find book with id: " + bookid + " or author with id: " + authorid);
         }
     
     }
