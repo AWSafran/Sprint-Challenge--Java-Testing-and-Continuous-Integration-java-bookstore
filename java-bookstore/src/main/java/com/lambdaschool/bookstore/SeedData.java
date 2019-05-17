@@ -1,8 +1,8 @@
 package com.lambdaschool.bookstore;
 
-import com.lambdaschool.bookstore.model.Role;
-import com.lambdaschool.bookstore.model.User;
-import com.lambdaschool.bookstore.model.UserRoles;
+import com.lambdaschool.bookstore.model.*;
+import com.lambdaschool.bookstore.repository.AuthorRepository;
+import com.lambdaschool.bookstore.repository.BookRepository;
 import com.lambdaschool.bookstore.repository.RoleRepository;
 import com.lambdaschool.bookstore.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -17,13 +17,17 @@ public class SeedData implements CommandLineRunner
 {
     RoleRepository rolerepos;
     UserRepository userrepos;
-
-    public SeedData(RoleRepository rolerepos, UserRepository userrepos)
+    BookRepository bookRepository;
+    AuthorRepository authorRepository;
+    
+    public SeedData(RoleRepository rolerepos, UserRepository userrepos, BookRepository bookRepository, AuthorRepository authorRepository)
     {
         this.rolerepos = rolerepos;
         this.userrepos = userrepos;
+        this.bookRepository = bookRepository;
+        this.authorRepository = authorRepository;
     }
-
+    
     @Override
     public void run(String[] args) throws Exception
     {
@@ -56,5 +60,21 @@ public class SeedData implements CommandLineRunner
         userrepos.save(u1);
         userrepos.save(u2);
         userrepos.save(u3);
+    
+        Book b1 = new Book("Test book", "123456789", 2018, new ArrayList<>());
+        
+        ArrayList<Book> b1List = new ArrayList<>();
+        b1List.add(b1);
+        
+        Author a1 = new Author("Andrew", "Safran", new ArrayList<>());
+        
+        //Turn off to test assign book to author
+        ArrayList<Author> a1List = new ArrayList<>();
+        a1List.add(a1);
+        b1.setAuthors(a1List);
+        a1.setBooks(b1List);
+        
+        bookRepository.save(b1);
+        authorRepository.save(a1);
     }
 }
