@@ -3,6 +3,7 @@ package com.lambdaschool.bookstore.service;
 import com.lambdaschool.bookstore.model.Book;
 import com.lambdaschool.bookstore.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,11 +17,11 @@ public class BookServiceImpl implements BookService
     @Autowired
     private BookRepository bookRepository;
     @Override
-    public List<Book> getAllBooks()
+    public List<Book> getAllBooks(Pageable pageable)
     {
         List<Book> rtnList = new ArrayList<>();
         
-        bookRepository.findAll().iterator().forEachRemaining(rtnList::add);
+        bookRepository.findAll(pageable).iterator().forEachRemaining(rtnList::add);
         
         return rtnList;
     }
